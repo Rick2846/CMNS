@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Comics Reading Challenge Poster</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ddd;
+    }
+    /* Display at A4 size in cm, with ~96 DPI = 794×1123 px internally */
+    canvas {
+      display: block;
+      margin: auto;
+      width: 21cm;
+      height: 29.7cm;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="posterCanvas" width="794" height="1123"></canvas>
+  <script>
+    const canvas = document.getElementById('posterCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Fill the background
+    ctx.fillStyle = '#ffed99';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Title
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = 'bold 48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText("Comics Reading Challenge!", canvas.width / 2, 110);
+
+    // Subtitle
+    ctx.fillStyle = '#333333';
+    ctx.font = '24px Arial';
+    ctx.fillText("Join our challenge and win amazing prizes!", canvas.width / 2, 160);
+
+    // Positions for the two "comic boxes"
+    const rectWidth = 250;
+    const rectHeight = 400;
+    const spacing = 80;
+    const totalWidth = rectWidth * 2 + spacing;
+    const leftX = (canvas.width - totalWidth) / 2;
+    const rightX = leftX + rectWidth + spacing;
+    const rectY = 230;
+
+    // -----------------------------
+    // 1) LEFT COMIC IMAGE
+    // -----------------------------
+    const comicImageLeft = new Image();
+    // Replace with the actual URL of your left comic image
+    comicImageLeft.src = "https://jp-college.com/wp_jpc/wp-content/uploads/2021/04/20210610_07.jpg";
+    // If you need cross-origin data (e.g., exporting the canvas), uncomment:
+    // comicImageLeft.crossOrigin = "anonymous";
+    comicImageLeft.onload = () => {
+      // Draw the image in the "left box"
+      ctx.drawImage(comicImageLeft, leftX, rectY, rectWidth, rectHeight);
+
+      // Optional outline around the image
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(leftX, rectY, rectWidth, rectHeight);
+    };
+
+    // -----------------------------
+    // 2) RIGHT COMIC IMAGE
+    // -----------------------------
+    const comicImageRight = new Image();
+    // Replace with the actual URL of your right comic image
+    comicImageRight.src = "https://jp-college.com/wp_jpc/wp-content/uploads/2021/04/20210610_01.jpg";
+    // If you need cross-origin data (e.g., exporting the canvas), uncomment:
+    // comicImageRight.crossOrigin = "anonymous";
+    comicImageRight.onload = () => {
+      // Draw the image in the "right box"
+      ctx.drawImage(comicImageRight, rightX, rectY, rectWidth, rectHeight);
+
+      // Optional outline
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(rightX, rectY, rectWidth, rectHeight);
+    };
+
+    // -----------------------------
+    // Description area under the comics
+    // -----------------------------
+    const descX = 60;
+    const descY = 650;
+    const descWidth = canvas.width - 2 * descX;
+    const descHeight = 300;
+
+    // Draw a white rectangle for the description background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(descX, descY, descWidth, descHeight);
+
+    // Outline the description area
+    ctx.strokeStyle = '#000000';
+    ctx.strokeRect(descX, descY, descWidth, descHeight);
+
+    // Description text
+    const textMargin = 20;
+    let textCursorY = descY + textMargin + 24;
+
+    ctx.fillStyle = '#000000';
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'left';
+
+    // Example description lines (customize as needed)
+    const descriptionLines = [
+      "How to Participate and explanation:",
+      "1. This challenge will start at ⚪︎⚪︎",
+      "2. Please read as many books as you can — not only comics,",
+      "   but also novels and academic books",
+      "3. The first three participants to finish reading books equivalent to",
+      "   20,000 characters will receive the prizes listed below",
+      "",
+      "Enjoy discovering new titles and discussing them with others!",
+      "Attention: This is a fake website. This event will NOT actually take place.",
+    ];
+
+    for (const line of descriptionLines) {
+      ctx.fillText(line, descX + textMargin, textCursorY);
+      textCursorY += 28; // line spacing
+    }
+
+    // Prize info at the bottom
+    ctx.fillStyle = '#cc0000';
+    ctx.font = 'bold 28px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      "1st Prize: $10,000 | 2nd Prize: $5,000 | 3rd Prize: $3,000",
+      canvas.width / 2,
+      1050
+    );
+  </script>
+</body>
+</html>
